@@ -1,0 +1,57 @@
+@import './global'
+
+.loadingBox
+    @include fullWidthHeight
+    @include flexCenter 
+    flex-direction: column
+    
+
+.loadingSpinner 
+    box-sizing: border-box
+    display: inline-block
+    height: 4rem
+    width: 4rem
+    border-radius: 100%
+    border-width: 2px
+    border-style: solid
+    border-color: #4B5563 /* gray-600 */
+    border-bottom-color: transparent
+    animation: spin 1s linear infinite
+    margin: 1rem 0
+
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) 
+        border-color: #F3F4F6 /* gray-100 */
+  
+@keyframes spin 
+    from 
+        transform: rotate(0deg)
+    
+    to 
+        transform: rotate(360deg)
+  
+.typingText 
+    font-family: 'Courier New', Courier, monospace 
+    font-size: 1.5rem 
+    white-space: nowrap 
+    overflow: hidden 
+    border-right: 2px solid 
+    animation: typing 3s steps(30, end) infinite, blink 0.5s step-end infinite
+  
+    @media (prefers-color-scheme: dark) 
+        border-color: #F3F4F6 
+  
+@keyframes typing 
+    from 
+        width: 0
+    
+    to 
+        width: 100% 
+  
+@keyframes blink 
+    from, to 
+        border-color: transparent
+    
+    50% 
+        border-color: black 
+  
