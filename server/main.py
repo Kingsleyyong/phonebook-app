@@ -1,20 +1,6 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from app import create_app
 
-app = Flask(__name__)
-cors = CORS(app, origins='*')
-
-@app.route("/api/users", methods=['GET'])
-def users():
-    return jsonify(
-        {
-            "users": [
-                'arpan',
-                'zach', 
-                'jessie'
-            ]
-        }
-    )
+app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

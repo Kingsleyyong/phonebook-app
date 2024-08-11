@@ -1,6 +1,6 @@
 import styles from '@/styles/listingPage.module.sass';
 import ListingTable from '../components/ListingTable/ListingTable';
-import AppendEditDialog from '../components/Dialog/AppendEditDialog';
+import AppendEditDialog from '../components/Dialog/EditDialog';
 
 const { listingPage, headerBar } = styles;
 
