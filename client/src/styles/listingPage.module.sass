@@ -1,19 +1,12 @@
-@import './global'
+@import './_global'
 @import './_color'
     
-@mixin boxSettings()
-    width: 96%
-    padding-left: 2%
-    padding-right: 2%
-    
 .listingPage
-    width: 80rem
-    margin-left: auto
-    margin-right: auto
+    @include page
 
 .headerBar
     @include flexCenter ()
-    @include boxSettings()
+    @include boxSettings ()
     
     margin-bottom: 5%
     justify-content: space-between
