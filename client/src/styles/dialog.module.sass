@@ -1,0 +1,51 @@
+@import './_global'
+@import './_color'
+
+.dialog
+    @include flexCenter ()
+   
+    position: absolute
+    width: 100vw
+    height: 100vh
+    top: 0
+    left: 0
+    background-color: $smOpacityWhite
+
+    @media (prefers-color-scheme: dark) 
+        background-color: $darkOpacityBlack
+
+
+.dialogBox
+    @include flexCenter ()
+    
+    flex-direction: column
+    justify-content: space-evenly
+    border-radius: 10px
+    background-color: $whiteSmoke
+    border: 1px solid $pureWhite
+    box-shadow: $lightOpacityBlack 0px 8px 24px
+    width: 50%
+    height: 50%
+
+    @media (prefers-color-scheme: dark) 
+        background-color: $darkGray 
+        border: 1px solid $darkOpacityGray
+
+    span
+        @include flexCenter ()
+
+        justify-content: space-between
+        width: 80%
+
+        input
+            width: 50%
+            height: 2em
+
+    span:last-child
+        justify-content: center
+
+    button
+        width: 30% 
+        margin: 0 3%
+
+        

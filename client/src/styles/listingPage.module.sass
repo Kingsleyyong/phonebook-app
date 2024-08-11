@@ -1,0 +1,58 @@
+@import './global'
+@import './_color'
+    
+@mixin boxSettings()
+    width: 96%
+    padding-left: 2%
+    padding-right: 2%
+    
+.listingPage
+    width: 80rem
+    margin-left: auto
+    margin-right: auto
+
+.headerBar
+    @include flexCenter ()
+    @include boxSettings()
+    
+    margin-bottom: 5%
+    justify-content: space-between
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px
+    border-radius: 10px
+
+
+    @media (prefers-color-scheme: dark)  
+        box-shadow: rgba(121, 121, 121, 0.25) 0px 50px 100px -20px, rgba(163, 163, 163, 0.3) 0px 30px 60px -30px
+    
+
+.listingTable
+    @include boxSettings()
+    
+    width: 100%
+    text-align: left
+    border-collapse: collapse
+
+    thead th:first-child
+        width: 7%
+        
+    thead th:last-child
+        width: 15%
+
+    tr
+        border-bottom: 1px solid $gray
+
+        @media (prefers-color-scheme: dark) 
+            border-color: $pureWhite
+
+    th
+        padding: 1%
+
+    td 
+        padding: 0 2%
+
+    button
+        margin: 1%
+
+    
+    
+    
