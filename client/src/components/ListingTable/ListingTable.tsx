@@ -31,9 +31,9 @@ const ListingTable = ({ setShowEditDialog }: IListingTable) => {
       </thead>
 
       <tbody>
-        {availableContacts.map((contact) => (
-          <tr key={`${contact.id} ${contact.name}`}>
-            <td>{contact.id}</td>
+        {availableContacts.map((contact, index) => (
+          <tr key={`${index + 1} ${contact.name}`}>
+            <td>{index + 1}</td>
             <td>{contact.name}</td>
             <td>{contact.phoneNumber}</td>
             <td>

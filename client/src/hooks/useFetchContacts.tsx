@@ -7,11 +7,11 @@ const useFetchContacts = () => {
     loading: false,
   });
 
+  const baseUrl = import.meta.env.VITE_API_ENDPOINT;
+
   const fetchData = async () => {
     try {
       setErrorLoading((prev) => ({ ...prev, loading: true }));
-
-      const baseUrl = import.meta.env.VITE_API_ENDPOINT;
       const response = await fetch(`${baseUrl}/contacts`);
       if (!response.ok) {
         setErrorLoading((prev) => ({
@@ -19,7 +19,7 @@ const useFetchContacts = () => {
           error: 'Network response was not ok',
         }));
 
-        return [] as ContactType[];
+        throw new Error('Network response was not ok');
       }
 
       const result = await response.json();
@@ -39,7 +39,120 @@ const useFetchContacts = () => {
     }
   };
 
-  return { fetchData, errorLoading };
+  const postData = async (newContact: ContactType) => {
+    try {
+      setErrorLoading((prev) => ({ ...prev, loading: true }));
+
+      const response = await fetch(`${baseUrl}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newContact),
+      });
+
+      if (!response.ok) {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'Failed to post data',
+        }));
+        throw new Error('Failed to post data');
+      }
+
+      const result = await response.json();
+      return result as ContactType;
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorLoading((prev) => ({ ...prev, error: error.message }));
+      } else {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'An unknown error occurred',
+        }));
+      }
+      return null;
+    } finally {
+      setErrorLoading((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
+  const editDataByID = async (id: number, updatedContact: ContactType) => {
+    try {
+      setErrorLoading((prev) => ({ ...prev, loading: true }));
+
+      const response = await fetch(`${baseUrl}/contacts/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedContact),
+      });
+
+      if (!response.ok) {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'Failed to update data',
+        }));
+        throw new Error('Failed to update data');
+      }
+
+      const result = await response.json();
+      return result as ContactType;
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorLoading((prev) => ({ ...prev, error: error.message }));
+      } else {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'An unknown error occurred',
+        }));
+      }
+      return null;
+    } finally {
+      setErrorLoading((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
+  const deleteDataByID = async (id: number) => {
+    try {
+      setErrorLoading((prev) => ({ ...prev, loading: true }));
+
+      const response = await fetch(`${baseUrl}/contacts/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'Failed to delete data',
+        }));
+        throw new Error('Failed to delete data');
+      }
+
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorLoading((prev) => ({ ...prev, error: error.message }));
+      } else {
+        setErrorLoading((prev) => ({
+          ...prev,
+          error: 'An unknown error occurred',
+        }));
+      }
+      return false;
+    } finally {
+      setErrorLoading((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
+  return {
+    fetchData,
+    postData,
+    editDataByID,
+    deleteDataByID,
+    errorLoading,
+    setErrorLoading,
+  };
 };
 
 export default useFetchContacts;
