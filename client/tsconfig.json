@@ -6,9 +6,12 @@
   ],
   "compilerOptions": {
     "types": ["node"],
-    "baseUrl": "./",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "*": ["types/*"]
     }
   }
 }
