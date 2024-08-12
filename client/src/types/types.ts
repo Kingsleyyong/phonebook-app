@@ -4,6 +4,7 @@ export interface ErrorLoadingMap {
 }
 
 export interface ContactType {
+  id: number;
   name: string;
   phoneNumber: string;
 }

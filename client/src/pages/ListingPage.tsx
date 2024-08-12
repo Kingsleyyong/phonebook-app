@@ -5,21 +5,27 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useFetchContacts from '../hooks/useFetchContacts';
 import Loading from '../components/Loading/Loading';
+import { ContactType } from '../types/types';
 
 const { listingPage, headerBar } = styles;
 
 const ListingPage = () => {
   const navigate = useNavigate();
-  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState<ContactType>();
 
   const { errorLoading } = useFetchContacts();
 
   return (
     <>
-      {errorLoading.loading && <Loading />}
+      {errorLoading.loading && showEditDialog === undefined && <Loading />}
 
       <div className={listingPage}>
-        {showEditDialog && <EditDialog setShowEditDialog={setShowEditDialog} />}
+        {showEditDialog && (
+          <EditDialog
+            showEditDialog={showEditDialog}
+            setShowEditDialog={setShowEditDialog}
+          />
+        )}
 
         <div className={headerBar}>
           <h2>Listing Page</h2>

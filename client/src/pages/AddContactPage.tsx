@@ -17,7 +17,7 @@ const AddContactPage = () => {
   const { postData, setErrorLoading } = useFetchContacts();
 
   const onSubmitHandler = () => {
-    const contact: ContactType = {
+    const contact: Partial<ContactType> = {
       name: nameRef.current?.value ?? '',
       phoneNumber: phoneNumberRef.current?.value ?? '',
     };

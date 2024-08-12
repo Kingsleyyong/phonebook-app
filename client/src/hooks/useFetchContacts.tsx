@@ -39,7 +39,7 @@ const useFetchContacts = () => {
     }
   };
 
-  const postData = async (newContact: ContactType) => {
+  const postData = async (newContact: Partial<ContactType>) => {
     try {
       setErrorLoading((prev) => ({ ...prev, loading: true }));
 
@@ -76,11 +76,11 @@ const useFetchContacts = () => {
     }
   };
 
-  const editDataByID = async (id: number, updatedContact: ContactType) => {
+  const editDataByID = async (updatedContact: ContactType) => {
     try {
       setErrorLoading((prev) => ({ ...prev, loading: true }));
 
-      const response = await fetch(`${baseUrl}/contacts/${id}`, {
+      const response = await fetch(`${baseUrl}/contacts/${updatedContact.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -6,7 +6,9 @@ import { ContactType } from '../../types/types';
 const { listingTable } = styles;
 
 interface IListingTable {
-  setShowEditDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowEditDialog: React.Dispatch<
+    React.SetStateAction<ContactType | undefined>
+  >;
 }
 
 const ListingTable = ({ setShowEditDialog }: IListingTable) => {
@@ -33,11 +35,11 @@ const ListingTable = ({ setShowEditDialog }: IListingTable) => {
       <tbody>
         {availableContacts.map((contact, index) => (
           <tr key={`${index + 1} ${contact.name}`}>
-            <td>{index + 1}</td>
+            <td>{contact.id}</td>
             <td>{contact.name}</td>
             <td>{contact.phoneNumber}</td>
             <td>
-              <button onClick={() => setShowEditDialog(true)}>✏️</button>
+              <button onClick={() => setShowEditDialog(contact)}>✏️</button>
               <button>🗑️</button>
             </td>
           </tr>
