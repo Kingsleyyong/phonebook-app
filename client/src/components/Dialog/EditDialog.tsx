@@ -2,7 +2,11 @@ import styles from '@/styles/dialog.module.sass';
 
 const { dialog, dialogBox } = styles;
 
-const AppendEditDialog = () => {
+interface IEditDialog {
+  setShowEditDialog: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const EditDialog = ({ setShowEditDialog }: IEditDialog) => {
   return (
     <div className={dialog}>
       <div className={dialogBox}>
@@ -21,11 +25,11 @@ const AppendEditDialog = () => {
         </span>
 
         <span>
-          <button>Cancel</button>
+          <button onClick={() => setShowEditDialog(false)}>Cancel</button>
           <button>Submit</button>
         </span>
       </div>
     </div>
   );
 };
-export default AppendEditDialog;
+export default EditDialog;

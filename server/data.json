@@ -1,12 +1,12 @@
 [
     {
         "name": "John Doe",
-        "phone": "123-456-7890",
+        "phoneNumber": "123-456-7890",
         "id": 1
     },
     {
         "name": "Kingsley",
-        "phone": "123-456-7890",
+        "phoneNumber": "123-456-7890",
         "id": 2
     }
 ]

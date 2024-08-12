@@ -13,3 +13,6 @@ def get_next_id(data):
     if not data:
         return 1
     return max(item['id'] for item in data) + 1
+
+def find_contact_by_id(data, contact_id):
+    return next((item for item in data if item['id'] == contact_id), None)

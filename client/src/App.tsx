@@ -1,4 +1,3 @@
-import Loading from './components/Loading/Loading';
 import styles from '@/styles/app.module.sass';
 import ListingPage from './pages/ListingPage';
 

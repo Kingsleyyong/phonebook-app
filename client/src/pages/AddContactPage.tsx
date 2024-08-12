@@ -1,10 +1,14 @@
 import styles from '@/styles/addContactPage.module.sass';
 import styles2 from '@/styles/dialog.module.sass';
 
+import { useNavigate } from 'react-router-dom';
+
 const { addContactPage } = styles;
 const { dialogBox } = styles2;
 
 const AddContactPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={addContactPage}>
       <div className={dialogBox}>
@@ -19,7 +23,7 @@ const AddContactPage = () => {
         </span>
 
         <span>
-          <button>Cancel</button>
+          <button onClick={() => navigate(-1)}>Cancel</button>
           <button>Submit</button>
         </span>
       </div>
