@@ -10,6 +10,9 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src'),
         },
     },
+    build: {
+        outDir: 'client/dist', // Ensure this matches your Vercel configuration
+    },
     plugins: [react(), tsconfigPaths()],
     server: {
         proxy: {
