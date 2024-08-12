@@ -15,7 +15,7 @@ const DeleteDialog = ({
   showDeleteDialog,
   setShowDeleteDialog,
 }: IDeleteDialog) => {
-  const { deleteDataByID, errorLoading, setErrorLoading } = useFetchContacts();
+  const { deleteDataByID } = useFetchContacts();
 
   const onConfirmHandler = () => {
     if (showDeleteDialog === undefined) return;
