@@ -6,12 +6,14 @@ import { useState } from 'react';
 import useFetchContacts from '../hooks/useFetchContacts';
 import Loading from '../components/Loading/Loading';
 import { ContactType } from '../types/types';
+import DeleteDialog from '../components/Dialog/DeleteDialog';
 
 const { listingPage, headerBar } = styles;
 
 const ListingPage = () => {
   const navigate = useNavigate();
   const [showEditDialog, setShowEditDialog] = useState<ContactType>();
+  const [showDeleteDialog, setShowDeleteDialog] = useState<ContactType>();
 
   const { errorLoading } = useFetchContacts();
 
@@ -20,6 +22,12 @@ const ListingPage = () => {
       {errorLoading.loading && showEditDialog === undefined && <Loading />}
 
       <div className={listingPage}>
+        {showDeleteDialog && (
+          <DeleteDialog
+            showDeleteDialog={showDeleteDialog}
+            setShowDeleteDialog={setShowDeleteDialog}
+          />
+        )}
         {showEditDialog && (
           <EditDialog
             showEditDialog={showEditDialog}
@@ -32,7 +40,12 @@ const ListingPage = () => {
           <button onClick={() => navigate('/add-contact')}>Add Contact</button>
         </div>
 
-        <ListingTable setShowEditDialog={setShowEditDialog} />
+        <ListingTable
+          showEditDialog={showEditDialog}
+          showDeleteDialog={showDeleteDialog}
+          setShowEditDialog={setShowEditDialog}
+          setShowDeleteDialog={setShowDeleteDialog}
+        />
       </div>
     </>
   );

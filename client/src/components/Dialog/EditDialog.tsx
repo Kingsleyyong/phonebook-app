@@ -3,7 +3,6 @@ import { ContactType } from '../../types/types';
 import Loading from '../Loading/Loading';
 import useFetchContacts from '../../hooks/useFetchContacts';
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const { dialog, dialogBox } = styles;
 
@@ -15,7 +14,6 @@ interface IEditDialog {
 }
 
 const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
-  const navigate = useNavigate();
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneNumberRef = useRef<HTMLInputElement>(null);
 
@@ -53,7 +51,7 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
     }
 
     editDataByID(contact).then((response) => {
-      if (response) navigate(-1);
+      if (response) setShowEditDialog(undefined);
     });
   };
 

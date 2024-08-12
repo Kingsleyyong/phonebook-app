@@ -6,20 +6,32 @@ import { ContactType } from '../../types/types';
 const { listingTable } = styles;
 
 interface IListingTable {
+  showEditDialog: ContactType | undefined;
+  showDeleteDialog: ContactType | undefined;
   setShowEditDialog: React.Dispatch<
+    React.SetStateAction<ContactType | undefined>
+  >;
+  setShowDeleteDialog: React.Dispatch<
     React.SetStateAction<ContactType | undefined>
   >;
 }
 
-const ListingTable = ({ setShowEditDialog }: IListingTable) => {
+const ListingTable = ({
+  showEditDialog,
+  showDeleteDialog,
+  setShowEditDialog,
+  setShowDeleteDialog,
+}: IListingTable) => {
   const [availableContacts, setAvailableContacts] = useState<ContactType[]>([]);
   const { fetchData } = useFetchContacts();
 
   useEffect(() => {
+    if (showEditDialog !== undefined || showDeleteDialog !== undefined) return;
+
     fetchData().then((response) => {
       setAvailableContacts(response);
     });
-  }, []);
+  }, [showEditDialog, showDeleteDialog]);
 
   return (
     <table className={listingTable}>
@@ -40,7 +52,7 @@ const ListingTable = ({ setShowEditDialog }: IListingTable) => {
             <td>{contact.phoneNumber}</td>
             <td>
               <button onClick={() => setShowEditDialog(contact)}>✏️</button>
-              <button>🗑️</button>
+              <button onClick={() => setShowDeleteDialog(contact)}>🗑️</button>
             </td>
           </tr>
         ))}
