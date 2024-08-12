@@ -1,7 +1,7 @@
 import styles from '@/styles/dialog.module.sass';
-import { ContactType } from '../../types/types';
-import useFetchContacts from '../../hooks/useFetchContacts';
 import { useRef } from 'react';
+import useFetchContacts from '../../hooks/useFetchContacts';
+import { ContactType } from '../../types/types';
 import Loading from '../Loading/Loading';
 
 const { dialog, dialogBox } = styles;
