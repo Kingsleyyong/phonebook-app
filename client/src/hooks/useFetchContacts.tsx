@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ContactType, ErrorLoadingMap } from '../types/types';
+import { ContactType, ErrorLoadingMap } from '../types/types.ts';
 
 const useFetchContacts = () => {
   const [errorLoading, setErrorLoading] = useState<ErrorLoadingMap>({

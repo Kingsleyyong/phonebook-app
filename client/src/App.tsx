@@ -1,8 +1,8 @@
 import styles from '@/styles/app.module.sass';
-import ListingPage from './pages/ListingPage';
+import ListingPage from './pages/ListingPage.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AddContactPage from './pages/AddContactPage';
+import AddContactPage from './pages/AddContactPage.tsx';
 
 const { appPage } = styles;
 

@@ -1,7 +1,7 @@
 import styles from '@/styles/listingPage.module.sass';
-import useFetchContacts from '../../hooks/useFetchContacts';
+import useFetchContacts from '../../hooks/useFetchContacts.tsx';
 import { useEffect, useState } from 'react';
-import { ContactType } from '../../types/types';
+import { ContactType } from '../../types/types.ts';
 
 const { listingTable } = styles;
 

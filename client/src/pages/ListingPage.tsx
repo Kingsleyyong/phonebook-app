@@ -1,12 +1,12 @@
 import styles from '@/styles/listingPage.module.sass';
-import ListingTable from '../components/ListingTable/ListingTable';
-import EditDialog from '../components/Dialog/EditDialog';
+import ListingTable from '../components/ListingTable/ListingTable.tsx';
+import EditDialog from '../components/Dialog/EditDialog.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import useFetchContacts from '../hooks/useFetchContacts';
-import Loading from '../components/Loading/Loading';
-import { ContactType } from '../types/types';
-import DeleteDialog from '../components/Dialog/DeleteDialog';
+import useFetchContacts from '../hooks/useFetchContacts.tsx';
+import Loading from '../components/Loading/Loading.tsx';
+import { ContactType } from '../types/types.ts';
+import DeleteDialog from '../components/Dialog/DeleteDialog.tsx';
 
 const { listingPage, headerBar } = styles;
 

@@ -3,8 +3,8 @@ import styles2 from '@/styles/dialog.module.sass';
 import { useRef } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { ContactType } from '../types/types';
-import useFetchContacts from '../hooks/useFetchContacts';
+import { ContactType } from '../types/types.ts';
+import useFetchContacts from '../hooks/useFetchContacts.tsx';
 
 const { addContactPage } = styles;
 const { dialogBox } = styles2;

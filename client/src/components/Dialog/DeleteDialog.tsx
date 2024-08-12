@@ -1,6 +1,6 @@
 import styles from '@/styles/dialog.module.sass';
-import { ContactType } from '../../types/types';
-import useFetchContacts from '../../hooks/useFetchContacts';
+import { ContactType } from '../../types/types.ts';
+import useFetchContacts from '../../hooks/useFetchContacts.tsx';
 
 const { dialog, dialogBox, contentBox } = styles;
 
