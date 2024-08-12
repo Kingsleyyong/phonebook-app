@@ -4,19 +4,19 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+        },
     },
-  },
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: process.env.API_ENDPOINT,
-        changeOrigin: true,
-        secure: false,
-      },
+    plugins: [react()],
+    server: {
+        proxy: {
+            '/api': {
+                target: process.env.API_ENDPOINT,
+                changeOrigin: true,
+                secure: false,
+            },
+        },
     },
-  },
 });

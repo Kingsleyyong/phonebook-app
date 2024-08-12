@@ -1,17 +1,16 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "types": ["node"],
-    "moduleResolution": "node",
-    "jsx": "react",
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["src/*"],
-      "*": ["types/*"]
-    }
-  }
+    "compilerOptions": {
+        "types": ["node"],
+        "moduleResolution": "node",
+        "jsx": "react",
+        "baseUrl": "src",
+        "paths": {
+            "@/*": ["*"]
+        },
+        "allowImportingTsExtensions": false
+    },
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ]
 }
