@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "projects": {
+    "client": {
+      "root": "client",
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist",
+      "ignoreCommand": "git diff --quiet HEAD^ HEAD ."
+    }
+  }
+}
