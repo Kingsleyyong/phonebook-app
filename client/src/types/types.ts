@@ -1,4 +1,5 @@
-export interface ErrorLoadingMap {
+export interface StatusMapping {
+    success: string | undefined;
     error: string | undefined;
     loading: boolean;
 }

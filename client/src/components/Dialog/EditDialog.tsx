@@ -17,7 +17,7 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneNumberRef = useRef<HTMLInputElement>(null);
 
-    const { editDataByID, errorLoading, setErrorLoading } = useFetchContacts();
+    const { editDataByID, statusObject, setStatusObject } = useFetchContacts();
 
     const onSubmitHandler = () => {
         const contact: ContactType = {
@@ -27,7 +27,7 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
         };
 
         if (contact.name === '' || contact.phoneNumber === '') {
-            setErrorLoading((prev) => ({
+            setStatusObject((prev) => ({
                 ...prev,
                 error:
                     contact.name === ''
@@ -42,7 +42,7 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
             contact.name === showEditDialog?.name &&
             contact.phoneNumber === showEditDialog?.phoneNumber
         ) {
-            setErrorLoading((prev) => ({
+            setStatusObject((prev) => ({
                 ...prev,
                 error: 'Please make changes.',
             }));
@@ -58,9 +58,9 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
     return (
         <div className={dialog}>
             <div className={dialogBox}>
-                {errorLoading.loading && <Loading />}
+                {statusObject.loading && <Loading />}
 
-                {!errorLoading.loading && (
+                {!statusObject.loading && (
                     <>
                         <span>
                             <label>No: </label>

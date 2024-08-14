@@ -14,7 +14,7 @@ const AddContactPage = () => {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneNumberRef = useRef<HTMLInputElement>(null);
 
-    const { postData, setErrorLoading } = useFetchContacts();
+    const { postData, setStatusObject } = useFetchContacts();
 
     const onSubmitHandler = () => {
         const contact: Partial<ContactType> = {
@@ -22,7 +22,7 @@ const AddContactPage = () => {
             phoneNumber: phoneNumberRef.current?.value ?? '',
         };
         if (contact.name === '' || contact.phoneNumber === '') {
-            setErrorLoading((prev) => ({
+            setStatusObject((prev) => ({
                 ...prev,
                 error:
                     contact.name === ''

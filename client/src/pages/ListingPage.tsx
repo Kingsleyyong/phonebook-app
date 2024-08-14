@@ -15,42 +15,44 @@ const ListingPage = () => {
     const [showEditDialog, setShowEditDialog] = useState<ContactType>();
     const [showDeleteDialog, setShowDeleteDialog] = useState<ContactType>();
 
-    const { errorLoading } = useFetchContacts();
+    const { statusObject } = useFetchContacts();
 
     return (
         <>
-            {errorLoading.loading && showEditDialog === undefined && (
-                <Loading />
-            )}
+            {!statusObject.loading && (
+                <div className={listingPage}>
+                    {showDeleteDialog && (
+                        <DeleteDialog
+                            showDeleteDialog={showDeleteDialog}
+                            setShowDeleteDialog={setShowDeleteDialog}
+                        />
+                    )}
+                    {showEditDialog && (
+                        <EditDialog
+                            showEditDialog={showEditDialog}
+                            setShowEditDialog={setShowEditDialog}
+                        />
+                    )}
 
-            <div className={listingPage}>
-                {showDeleteDialog && (
-                    <DeleteDialog
+                    <div className={headerBar}>
+                        <h2>Listing Page</h2>
+                        <button onClick={() => navigate('/add-contact')}>
+                            Add Contact
+                        </button>
+                    </div>
+
+                    <ListingTable
+                        showEditDialog={showEditDialog}
                         showDeleteDialog={showDeleteDialog}
+                        setShowEditDialog={setShowEditDialog}
                         setShowDeleteDialog={setShowDeleteDialog}
                     />
-                )}
-                {showEditDialog && (
-                    <EditDialog
-                        showEditDialog={showEditDialog}
-                        setShowEditDialog={setShowEditDialog}
-                    />
-                )}
-
-                <div className={headerBar}>
-                    <h2>Listing Page</h2>
-                    <button onClick={() => navigate('/add-contact')}>
-                        Add Contact
-                    </button>
                 </div>
+            )}
 
-                <ListingTable
-                    showEditDialog={showEditDialog}
-                    showDeleteDialog={showDeleteDialog}
-                    setShowEditDialog={setShowEditDialog}
-                    setShowDeleteDialog={setShowDeleteDialog}
-                />
-            </div>
+            {statusObject.loading && showEditDialog === undefined && (
+                <Loading />
+            )}
         </>
     );
 };

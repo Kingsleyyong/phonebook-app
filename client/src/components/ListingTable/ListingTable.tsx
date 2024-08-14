@@ -2,6 +2,7 @@ import styles from '@/styles/listingPage.module.sass';
 import { useEffect, useState } from 'react';
 import { ContactType } from '../../types/types';
 import useFetchContacts from '../../hooks/useFetchContacts';
+import Loading from '../Loading/Loading';
 
 const { listingTable } = styles;
 
@@ -25,7 +26,7 @@ const ListingTable = ({
     const [availableContacts, setAvailableContacts] = useState<ContactType[]>(
         []
     );
-    const { fetchData } = useFetchContacts();
+    const { fetchData, statusObject } = useFetchContacts();
 
     useEffect(() => {
         if (showEditDialog !== undefined || showDeleteDialog !== undefined)
@@ -48,6 +49,14 @@ const ListingTable = ({
             </thead>
 
             <tbody>
+                {/* {statusObject.loading && (
+                    <tr>
+                        <td colSpan={4}>
+                            <Loading />
+                        </td>
+                    </tr>
+                )} */}
+
                 {availableContacts.map((contact, index) => (
                     <tr key={`${index + 1} ${contact.name}`}>
                         <td>{contact.id}</td>

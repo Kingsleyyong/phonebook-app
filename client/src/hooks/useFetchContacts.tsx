@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ContactType, ErrorLoadingMap } from '../types/types';
+import { ContactType, StatusMapping } from '../types/types';
 
 const useFetchContacts = () => {
-    const [errorLoading, setErrorLoading] = useState<ErrorLoadingMap>({
+    const [statusObject, setStatusObject] = useState<StatusMapping>({
+        success: undefined,
         error: undefined,
         loading: false,
     });
@@ -11,10 +12,10 @@ const useFetchContacts = () => {
 
     const fetchData = async () => {
         try {
-            setErrorLoading((prev) => ({ ...prev, loading: true }));
+            setStatusObject((prev) => ({ ...prev, loading: true }));
             const response = await fetch(`${baseUrl}/contacts`);
             if (!response.ok) {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'Network response was not ok',
                 }));
@@ -26,22 +27,22 @@ const useFetchContacts = () => {
             return result as ContactType[];
         } catch (error) {
             if (error instanceof Error) {
-                setErrorLoading((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({ ...prev, error: error.message }));
             } else {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'An unknown error occurred',
                 }));
             }
             return [] as ContactType[];
         } finally {
-            setErrorLoading((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({ ...prev, loading: false }));
         }
     };
 
     const postData = async (newContact: Partial<ContactType>) => {
         try {
-            setErrorLoading((prev) => ({ ...prev, loading: true }));
+            setStatusObject((prev) => ({ ...prev, loading: true }));
 
             const response = await fetch(`${baseUrl}/contacts`, {
                 method: 'POST',
@@ -52,7 +53,7 @@ const useFetchContacts = () => {
             });
 
             if (!response.ok) {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'Failed to post data',
                 }));
@@ -63,22 +64,22 @@ const useFetchContacts = () => {
             return result as ContactType;
         } catch (error) {
             if (error instanceof Error) {
-                setErrorLoading((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({ ...prev, error: error.message }));
             } else {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'An unknown error occurred',
                 }));
             }
             return null;
         } finally {
-            setErrorLoading((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({ ...prev, loading: false }));
         }
     };
 
     const editDataByID = async (updatedContact: ContactType) => {
         try {
-            setErrorLoading((prev) => ({ ...prev, loading: true }));
+            setStatusObject((prev) => ({ ...prev, loading: true }));
 
             const response = await fetch(
                 `${baseUrl}/contacts/${updatedContact.id}`,
@@ -92,7 +93,7 @@ const useFetchContacts = () => {
             );
 
             if (!response.ok) {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'Failed to update data',
                 }));
@@ -103,29 +104,29 @@ const useFetchContacts = () => {
             return result as ContactType;
         } catch (error) {
             if (error instanceof Error) {
-                setErrorLoading((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({ ...prev, error: error.message }));
             } else {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'An unknown error occurred',
                 }));
             }
             return null;
         } finally {
-            setErrorLoading((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({ ...prev, loading: false }));
         }
     };
 
     const deleteDataByID = async (id: number) => {
         try {
-            setErrorLoading((prev) => ({ ...prev, loading: true }));
+            setStatusObject((prev) => ({ ...prev, loading: true }));
 
             const response = await fetch(`${baseUrl}/contacts/${id}`, {
                 method: 'DELETE',
             });
 
             if (!response.ok) {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'Failed to delete data',
                 }));
@@ -135,16 +136,16 @@ const useFetchContacts = () => {
             return true;
         } catch (error) {
             if (error instanceof Error) {
-                setErrorLoading((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({ ...prev, error: error.message }));
             } else {
-                setErrorLoading((prev) => ({
+                setStatusObject((prev) => ({
                     ...prev,
                     error: 'An unknown error occurred',
                 }));
             }
             return false;
         } finally {
-            setErrorLoading((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({ ...prev, loading: false }));
         }
     };
 
@@ -153,8 +154,8 @@ const useFetchContacts = () => {
         postData,
         editDataByID,
         deleteDataByID,
-        errorLoading,
-        setErrorLoading,
+        statusObject,
+        setStatusObject,
     };
 };
 
