@@ -11,7 +11,7 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: 'client/dist', // Ensure this matches your Vercel configuration
+        outDir: 'dist', // Ensure this matches your Vercel configuration
     },
     plugins: [react(), tsconfigPaths()],
     server: {
@@ -20,6 +20,7 @@ export default defineConfig({
                 target: process.env.API_ENDPOINT,
                 changeOrigin: true,
                 secure: false,
+                rewrite: (path) => path.replace(/^\/api/, ''),
             },
         },
     },
