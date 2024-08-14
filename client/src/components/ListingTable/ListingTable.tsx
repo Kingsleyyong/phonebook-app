@@ -1,12 +1,10 @@
 import styles from '@/styles/listingPage.module.sass';
-import { useEffect, useState } from 'react';
 import { ContactType } from '../../types/types';
-import useFetchContacts from '../../hooks/useFetchContacts';
-import Loading from '../Loading/Loading';
 
-const { listingTable } = styles;
+const { listingTable, zeroData } = styles;
 
 interface IListingTable {
+    availableContacts: ContactType[];
     showEditDialog: ContactType | undefined;
     showDeleteDialog: ContactType | undefined;
     setShowEditDialog: React.Dispatch<
@@ -18,25 +16,10 @@ interface IListingTable {
 }
 
 const ListingTable = ({
-    showEditDialog,
-    showDeleteDialog,
+    availableContacts,
     setShowEditDialog,
     setShowDeleteDialog,
 }: IListingTable) => {
-    const [availableContacts, setAvailableContacts] = useState<ContactType[]>(
-        []
-    );
-    const { fetchData, statusObject } = useFetchContacts();
-
-    useEffect(() => {
-        if (showEditDialog !== undefined || showDeleteDialog !== undefined)
-            return;
-
-        fetchData().then((response) => {
-            setAvailableContacts(response);
-        });
-    }, [showEditDialog, showDeleteDialog]);
-
     return (
         <table className={listingTable}>
             <thead>
@@ -49,14 +32,13 @@ const ListingTable = ({
             </thead>
 
             <tbody>
-                {/* {statusObject.loading && (
+                {availableContacts.length === 0 && (
                     <tr>
-                        <td colSpan={4}>
-                            <Loading />
+                        <td className={zeroData} colSpan={4}>
+                            <h2>There is no data entry.</h2>
                         </td>
                     </tr>
-                )} */}
-
+                )}
                 {availableContacts.map((contact, index) => (
                     <tr key={`${index + 1} ${contact.name}`}>
                         <td>{contact.id}</td>

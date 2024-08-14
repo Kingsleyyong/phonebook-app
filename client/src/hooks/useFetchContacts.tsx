@@ -72,8 +72,6 @@ const useFetchContacts = () => {
                 }));
             }
             return null;
-        } finally {
-            setStatusObject((prev) => ({ ...prev, loading: false }));
         }
     };
 

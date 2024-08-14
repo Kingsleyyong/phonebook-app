@@ -7,13 +7,18 @@ import Loading from '../Loading/Loading';
 const { dialog, dialogBox } = styles;
 
 interface IEditDialog {
+    setAvailableContacts: React.Dispatch<React.SetStateAction<ContactType[]>>;
     showEditDialog: ContactType | undefined;
     setShowEditDialog: React.Dispatch<
         React.SetStateAction<ContactType | undefined>
     >;
 }
 
-const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
+const EditDialog = ({
+    showEditDialog,
+    setShowEditDialog,
+    setAvailableContacts,
+}: IEditDialog) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneNumberRef = useRef<HTMLInputElement>(null);
 
@@ -51,16 +56,23 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
         }
 
         editDataByID(contact).then((response) => {
-            if (response) setShowEditDialog(undefined);
+            if (!response) return;
+
+            setAvailableContacts((prev) =>
+                prev.map((contact) =>
+                    contact.id === response.id ? response : contact
+                )
+            );
+            setShowEditDialog(undefined);
         });
     };
 
     return (
         <div className={dialog}>
-            <div className={dialogBox}>
-                {statusObject.loading && <Loading />}
-
-                {!statusObject.loading && (
+            {statusObject.loading ? (
+                <Loading />
+            ) : (
+                <div className={dialogBox}>
                     <>
                         <span>
                             <label>No: </label>
@@ -91,8 +103,8 @@ const EditDialog = ({ showEditDialog, setShowEditDialog }: IEditDialog) => {
                             <button onClick={onSubmitHandler}>Submit</button>
                         </span>
                     </>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

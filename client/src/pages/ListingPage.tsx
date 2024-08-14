@@ -2,7 +2,7 @@ import styles from '@/styles/listingPage.module.sass';
 import ListingTable from '../components/ListingTable/ListingTable';
 import EditDialog from '../components/Dialog/EditDialog';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFetchContacts from '../hooks/useFetchContacts';
 import Loading from '../components/Loading/Loading';
 import { ContactType } from '../types/types';
@@ -14,21 +14,36 @@ const ListingPage = () => {
     const navigate = useNavigate();
     const [showEditDialog, setShowEditDialog] = useState<ContactType>();
     const [showDeleteDialog, setShowDeleteDialog] = useState<ContactType>();
+    const [availableContacts, setAvailableContacts] = useState<ContactType[]>(
+        []
+    );
 
-    const { statusObject } = useFetchContacts();
+    const { fetchData, statusObject } = useFetchContacts();
+
+    useEffect(() => {
+        fetchData().then((response) => {
+            setAvailableContacts(response);
+        });
+    }, []);
 
     return (
         <>
+            {statusObject.loading &&
+                showEditDialog === undefined &&
+                showDeleteDialog === undefined && <Loading />}
+
             {!statusObject.loading && (
                 <div className={listingPage}>
                     {showDeleteDialog && (
                         <DeleteDialog
+                            setAvailableContacts={setAvailableContacts}
                             showDeleteDialog={showDeleteDialog}
                             setShowDeleteDialog={setShowDeleteDialog}
                         />
                     )}
                     {showEditDialog && (
                         <EditDialog
+                            setAvailableContacts={setAvailableContacts}
                             showEditDialog={showEditDialog}
                             setShowEditDialog={setShowEditDialog}
                         />
@@ -42,16 +57,13 @@ const ListingPage = () => {
                     </div>
 
                     <ListingTable
+                        availableContacts={availableContacts}
                         showEditDialog={showEditDialog}
                         showDeleteDialog={showDeleteDialog}
                         setShowEditDialog={setShowEditDialog}
                         setShowDeleteDialog={setShowDeleteDialog}
                     />
                 </div>
-            )}
-
-            {statusObject.loading && showEditDialog === undefined && (
-                <Loading />
             )}
         </>
     );

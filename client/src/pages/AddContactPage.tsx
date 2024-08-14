@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ContactType } from '../types/types';
 import useFetchContacts from '../hooks/useFetchContacts';
+import Loading from '../components/Loading/Loading';
 
 const { addContactPage } = styles;
 const { dialogBox } = styles2;
@@ -14,7 +15,7 @@ const AddContactPage = () => {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneNumberRef = useRef<HTMLInputElement>(null);
 
-    const { postData, setStatusObject } = useFetchContacts();
+    const { postData, setStatusObject, statusObject } = useFetchContacts();
 
     const onSubmitHandler = () => {
         const contact: Partial<ContactType> = {
@@ -40,22 +41,26 @@ const AddContactPage = () => {
 
     return (
         <div className={addContactPage}>
-            <div className={dialogBox}>
-                <span>
-                    <label>Name: </label>
-                    <input type="text" ref={nameRef} />
-                </span>
+            {statusObject.loading ? (
+                <Loading />
+            ) : (
+                <div className={dialogBox}>
+                    <span>
+                        <label>Name: </label>
+                        <input type="text" ref={nameRef} />
+                    </span>
 
-                <span>
-                    <label>Phone Number: </label>
-                    <input type="tel" ref={phoneNumberRef} />
-                </span>
+                    <span>
+                        <label>Phone Number: </label>
+                        <input type="tel" ref={phoneNumberRef} />
+                    </span>
 
-                <span>
-                    <button onClick={() => navigate(-1)}>Cancel</button>
-                    <button onClick={onSubmitHandler}>Submit</button>
-                </span>
-            </div>
+                    <span>
+                        <button onClick={() => navigate(-1)}>Cancel</button>
+                        <button onClick={onSubmitHandler}>Submit</button>
+                    </span>
+                </div>
+            )}
         </div>
     );
 };
