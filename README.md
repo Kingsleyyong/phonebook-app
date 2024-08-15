@@ -36,7 +36,7 @@ This stack ensures that the project is not only modern and scalable but also mai
 
 ## Prerequisites
 
-1. **Node.js and npm**: Ensure you have Node.js installed, which includes npm (Node Package Manager).
+1. **Node.js and pnpm**: Ensure you have Node.js and [PnPm](https://pnpm.io) installed.
 2. **Python 3.10 or higher**: Install Python if it's not already installed.
 3. **Homebrew (Optional)**: If you're on macOS, you might have installed Python via Homebrew.
 4. **AWS CLI**: Install and configure AWS CLI if you're interacting with AWS services.
@@ -93,13 +93,13 @@ The Flask backend should now be running at `http://127.0.0.1:5000/`.
 - Install Node.js Dependencies
 
 ```bash
-      npm install
+      pnpm install
 ```
 
 - Run the Development Server
 
 ```bash
-      npm run dev
+      pnpm dev
 ```
 The React frontend should now be running at `http://127.0.0.1:5173/` (or another port, depending on availability).
 

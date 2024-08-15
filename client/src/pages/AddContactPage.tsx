@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ContactType } from '../types/types';
 import useFetchContacts from '../hooks/useFetchContacts';
 import Loading from '../components/Loading/Loading';
+import { useStatusContext } from '../context/StatusContext';
 
 const { addContactPage } = styles;
 const { dialogBox } = styles2;
@@ -15,7 +16,8 @@ const AddContactPage = () => {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneNumberRef = useRef<HTMLInputElement>(null);
 
-    const { postData, setStatusObject, statusObject } = useFetchContacts();
+    const { postData } = useFetchContacts();
+    const { statusObject, setStatusObject } = useStatusContext();
 
     const onSubmitHandler = () => {
         const contact: Partial<ContactType> = {
@@ -35,7 +37,13 @@ const AddContactPage = () => {
         }
 
         postData(contact).then((response) => {
-            if (response) navigate(-1);
+            if (response) {
+                navigate(-1);
+                setStatusObject((prev) => ({
+                    ...prev,
+                    success: `Added New Entry, ID: ${response.id} Sucess!`,
+                }));
+            }
         });
     };
 

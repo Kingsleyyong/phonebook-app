@@ -1,36 +1,29 @@
-import { useState } from 'react';
-import { ContactType, StatusMapping } from '../types/types';
+import { ContactType } from '../types/types';
+import { useStatusContext } from '../context/StatusContext';
 
 const useFetchContacts = () => {
-    const [statusObject, setStatusObject] = useState<StatusMapping>({
-        success: undefined,
-        error: undefined,
-        loading: false,
-    });
-
     const baseUrl = import.meta.env.VITE_API_ENDPOINT;
+    const { setStatusObject } = useStatusContext();
 
     const fetchData = async () => {
         try {
             setStatusObject((prev) => ({ ...prev, loading: true }));
             const response = await fetch(`${baseUrl}/contacts`);
-            if (!response.ok) {
-                setStatusObject((prev) => ({
-                    ...prev,
-                    error: 'Network response was not ok',
-                }));
-
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
 
             const result = await response.json();
             return result as ContactType[];
         } catch (error) {
             if (error instanceof Error) {
-                setStatusObject((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({
+                    ...prev,
+                    loading: false,
+                    error: error.message,
+                }));
             } else {
                 setStatusObject((prev) => ({
                     ...prev,
+                    loading: false,
                     error: 'An unknown error occurred',
                 }));
             }
@@ -52,22 +45,21 @@ const useFetchContacts = () => {
                 body: JSON.stringify(newContact),
             });
 
-            if (!response.ok) {
-                setStatusObject((prev) => ({
-                    ...prev,
-                    error: 'Failed to post data',
-                }));
-                throw new Error('Failed to post data');
-            }
+            if (!response.ok) throw new Error('Failed to post data');
 
             const result = await response.json();
             return result as ContactType;
         } catch (error) {
             if (error instanceof Error) {
-                setStatusObject((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({
+                    ...prev,
+                    loading: false,
+                    error: error.message,
+                }));
             } else {
                 setStatusObject((prev) => ({
                     ...prev,
+                    loading: false,
                     error: 'An unknown error occurred',
                 }));
             }
@@ -76,9 +68,8 @@ const useFetchContacts = () => {
     };
 
     const editDataByID = async (updatedContact: ContactType) => {
+        setStatusObject((prev) => ({ ...prev, loading: true }));
         try {
-            setStatusObject((prev) => ({ ...prev, loading: true }));
-
             const response = await fetch(
                 `${baseUrl}/contacts/${updatedContact.id}`,
                 {
@@ -90,28 +81,31 @@ const useFetchContacts = () => {
                 }
             );
 
-            if (!response.ok) {
-                setStatusObject((prev) => ({
-                    ...prev,
-                    error: 'Failed to update data',
-                }));
-                throw new Error('Failed to update data');
-            }
+            if (!response.ok) throw new Error('Failed to update data');
 
             const result = await response.json();
             return result as ContactType;
         } catch (error) {
             if (error instanceof Error) {
-                setStatusObject((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({
+                    ...prev,
+                    loading: false,
+                    error: error.message,
+                }));
             } else {
                 setStatusObject((prev) => ({
                     ...prev,
+                    loading: false,
                     error: 'An unknown error occurred',
                 }));
             }
             return null;
         } finally {
-            setStatusObject((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({
+                ...prev,
+                success: `ID: ${updatedContact.id} Update Sucess!`,
+                loading: false,
+            }));
         }
     };
 
@@ -123,27 +117,30 @@ const useFetchContacts = () => {
                 method: 'DELETE',
             });
 
-            if (!response.ok) {
-                setStatusObject((prev) => ({
-                    ...prev,
-                    error: 'Failed to delete data',
-                }));
-                throw new Error('Failed to delete data');
-            }
+            if (!response.ok) throw new Error('Failed to delete data');
 
             return true;
         } catch (error) {
             if (error instanceof Error) {
-                setStatusObject((prev) => ({ ...prev, error: error.message }));
+                setStatusObject((prev) => ({
+                    ...prev,
+                    loading: false,
+                    error: error.message,
+                }));
             } else {
                 setStatusObject((prev) => ({
                     ...prev,
+                    loading: false,
                     error: 'An unknown error occurred',
                 }));
             }
             return false;
         } finally {
-            setStatusObject((prev) => ({ ...prev, loading: false }));
+            setStatusObject((prev) => ({
+                ...prev,
+                success: `ID: ${id} Delete Sucess!`,
+                loading: false,
+            }));
         }
     };
 
@@ -152,8 +149,6 @@ const useFetchContacts = () => {
         postData,
         editDataByID,
         deleteDataByID,
-        statusObject,
-        setStatusObject,
     };
 };
 

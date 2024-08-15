@@ -1,0 +1,35 @@
+@import './_global'
+@import './_color'
+
+.statusBox
+      @include flexCenter ()
+
+      justify-content: space-between
+      position: absolute
+      bottom: 1rem
+      right: 1rem
+      padding: 0.3% 1%
+      border-radius: 10px
+      min-width: 10%
+      max-width: 20%
+
+      button
+            opacity: 50%
+            width: 20%
+            padding: 0.4em 0.2em
+            font-size: 0.7em
+
+.fadeout
+      animation: fadeOutAnimation 2s ease-out 0s 1 normal forwards
+
+.error
+      background-color: $error
+.success
+      background-color: $success
+
+@keyframes fadeOutAnimation
+   0%
+      opacity: 1
+   100% 
+      opacity: 0
+   

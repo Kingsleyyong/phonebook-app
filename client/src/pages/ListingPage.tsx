@@ -7,6 +7,7 @@ import useFetchContacts from '../hooks/useFetchContacts';
 import Loading from '../components/Loading/Loading';
 import { ContactType } from '../types/types';
 import DeleteDialog from '../components/Dialog/DeleteDialog';
+import { useStatusContext } from '../context/StatusContext';
 
 const { listingPage, headerBar } = styles;
 
@@ -18,7 +19,8 @@ const ListingPage = () => {
         []
     );
 
-    const { fetchData, statusObject } = useFetchContacts();
+    const { fetchData } = useFetchContacts();
+    const { statusObject } = useStatusContext();
 
     useEffect(() => {
         fetchData().then((response) => {
@@ -28,9 +30,7 @@ const ListingPage = () => {
 
     return (
         <>
-            {statusObject.loading &&
-                showEditDialog === undefined &&
-                showDeleteDialog === undefined && <Loading />}
+            {statusObject.loading && <Loading />}
 
             {!statusObject.loading && (
                 <div className={listingPage}>

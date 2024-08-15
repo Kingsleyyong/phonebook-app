@@ -1,7 +1,6 @@
 import useFetchContacts from '../../hooks/useFetchContacts';
 import styles from '@/styles/dialog.module.sass';
 import { ContactType } from '../../types/types';
-import Loading from '../Loading/Loading';
 
 const { dialog, dialogBox, contentBox } = styles;
 
@@ -18,7 +17,7 @@ const DeleteDialog = ({
     showDeleteDialog,
     setShowDeleteDialog,
 }: IDeleteDialog) => {
-    const { deleteDataByID, statusObject } = useFetchContacts();
+    const { deleteDataByID } = useFetchContacts();
 
     const onConfirmHandler = () => {
         if (showDeleteDialog === undefined) return;
@@ -35,25 +34,21 @@ const DeleteDialog = ({
 
     return (
         <div className={dialog}>
-            {statusObject.loading ? (
-                <Loading />
-            ) : (
-                <div className={dialogBox}>
-                    <h3>Are you sure to delete?</h3>
+            <div className={dialogBox}>
+                <h3>Are you sure to delete?</h3>
 
-                    <div className={contentBox}>
-                        <div>Name: {showDeleteDialog?.name}</div>
-                        <div>Phone Number: {showDeleteDialog?.phoneNumber}</div>
-                    </div>
-
-                    <span>
-                        <button onClick={() => setShowDeleteDialog(undefined)}>
-                            Cancel
-                        </button>
-                        <button onClick={onConfirmHandler}>Confirm</button>
-                    </span>
+                <div className={contentBox}>
+                    <div>Name: {showDeleteDialog?.name}</div>
+                    <div>Phone Number: {showDeleteDialog?.phoneNumber}</div>
                 </div>
-            )}
+
+                <span>
+                    <button onClick={() => setShowDeleteDialog(undefined)}>
+                        Cancel
+                    </button>
+                    <button onClick={onConfirmHandler}>Confirm</button>
+                </span>
+            </div>
         </div>
     );
 };
