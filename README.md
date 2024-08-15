@@ -1,4 +1,4 @@
-# Phonebook Application
+# [Welcome to Phonebook App 🎉](https://phonebook-app-ten.vercel.app/)
 
 ## Project Overview
 
@@ -110,8 +110,8 @@ Ensure that the React frontend is making API requests to the Flask backend runni
 ```
 
 ### 5. Testing and Debugging
-Backend: Use tools like Postman to test API endpoints.
-Frontend: Open your browser’s developer tools to debug and test the frontend.
+- Backend: Use tools like Postman to test API endpoints.
+- Frontend: Open your browser’s developer tools to debug and test the frontend.
 
 ### 6. Deactivate the Python Virtual Environment (Optional)
 After done with the server:
